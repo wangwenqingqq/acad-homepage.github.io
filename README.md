@@ -1,72 +1,44 @@
+# Minimalist Academic Homepage
 
-<h1 align="center">
-AcadHomepage
-</h1>
+清爽极简、零构建依赖的个人学术主页（支持 **EN / 中文** 无刷新双语切换），借鉴 `yiranzhu06.github.io` 的学院派极简布局与交互组件。
 
-<div align="center">
+## 目录结构
 
-[![](https://img.shields.io/github/stars/RayeRen/acad-homepage.github.io)](https://github.com/RayeRen/acad-homepage.github.io)
-[![](https://img.shields.io/github/forks/RayeRen/acad-homepage.github.io)](https://github.com/RayeRen/acad-homepage.github.io)
-[![](https://img.shields.io/github/issues/RayeRen/acad-homepage.github.io)](https://github.com/RayeRen/acad-homepage.github.io)
-[![](https://img.shields.io/github/license/RayeRen/acad-homepage.github.io)](https://github.com/RayeRen/acad-homepage.github.io/blob/main/LICENSE)  | [中文文档](./docs/README-zh.md) 
-</div>
+```text
+homepage/
+├── index.html                           # 页面主入口（可直接双击打开预览）
+├── README.md                            # 使用与部署说明
+└── assets/
+    ├── css/main.css                     # 极简学院风样式与响应式布局
+    ├── js/
+    │   ├── site-data.js                 # 【核心配置】所有个人简介、论文、经历、致谢与联系方式
+    │   └── app.js                       # 页面渲染、双语切换与交互逻辑
+    └── images/                          # 头像、论文配图与机构 Logo（替换其中的占位图即可）
+```
 
-<p align="center">A Modern and Responsive Academic Personal Homepage</p>
+## 快速自定义步骤
 
-<p align="center">
-    <br>
-    <img src="docs/screenshot.png" width="100%"/>
-    <br>
-</p>
+1. **编辑个人内容**：打开 `assets/js/site-data.js`，按字段依次替换：
+   - `profile`：头像路径、姓名、身份简介与外链（GitHub / Google Scholar / CV / ORCID 等）
+   - `about`：个人简介与研究方向（中英双语）
+   - `news`：按时间倒序的最新动态
+   - `publications`：论文标题、会议徽章（`badge`）、缩略图、作者列表（自己设置 `isOwner: true` 会自动加粗）、发表信息与外链
+   - `experience`：科研经历与教育背景（`active: true` 显示实心黑点，`false` 显示空心圆点）
+   - `acknowledgements`：致谢对象列表（支持按首字母自动排序及键盘切换）
+   - `contact`：修改 `emailUser` 与 `emailDomain`（点击展开防爬虫）；如需启用在线留言，前往 [Formspree](https://formspree.io/) 免费创建表单并将地址填入 `formspreeEndpoint`
+2. **替换图片素材**：把你的个人照片、论文架构图和学校/机构 Logo 放入 `assets/images/`，并在 `site-data.js` 中更新对应路径即可。
 
-Some examples:
-- [Demo Page](https://rayeren.github.io/acad-homepage.github.io/)
-- [Personal Homepage of the author](https://rayeren.github.io/)
+## 部署到 GitHub Pages
 
-## Key Features
-- **Automatically update google scholar citations**: using the google scholar crawler and github action, this REPO can update the author citations and publication citations automatically.
-- **Support Google analytics**: you can trace the traffics of your homepage by easy configuration.
-- **Responsive**: this homepage automatically adjust for different screen sizes and viewports.
-- **Beautiful and Simple Design**: this homepage is beautiful and simple, which is very suitable for academic personal homepage.
-- **SEO**: search Engine Optimization (SEO) helps search engines find the information you publish on your homepage easily, then rank it against similar websites.
-
-## Quick Start
-
-1. Fork this REPO and rename to `USERNAME.github.io`, where `USERNAME` is your github USERNAME.
-1. Configure the google scholar citation crawler:
-    1. Find your google scholar ID in the url of your google scholar page (e.g., https://scholar.google.com/citations?user=SCHOLAR_ID), where `SCHOLAR_ID` is your google scholar ID.
-    1. Set GOOGLE_SCHOLAR_ID variable to your google scholar ID in `Settings -> Secrets -> Actions -> New repository secret` of the REPO website with `name=GOOGLE_SCHOLAR_ID` and `value=SCHOLAR_ID`.
-    1. Click the `Action` of the REPO website and enable the workflows by clicking *"I understand my workflows, go ahead and enable them"*. This github action will generate google scholar citation stats data `gs_data.json` in `google-scholar-stats` branch of your REPO. When you update your main branch, this action will be triggered. This action will also be trigger 08:00 UTC everyday.
-1. Generate favicon using [favicon-generator](https://redketchup.io/favicon-generator) and download all generated files to `REPO/images`.
-1. Modify the configuration of your homepage `_config.yml`:
-    1. `title`: the title of your homepage
-    1. `description`: the description of your homepage
-    1. `repository`: USER_NAME/REPO_NAME  
-    1. `google_analytics_id` (optional): google analytics ID
-    1. SEO Related keys (optional): get these keys from search engine consoles (e.g. Google, Bing and Baidu) and paste here.
-    1. `author`: the author information of this homepage, including some other websites, emails, city and univeristy.
-    1. More configuration details are described in the comments.
-1. Add your homepage content in `_pages/about.md`.
-    1. You can use html+markdown syntax just same as jekyll.
-    1. You can use a `<span>` tag with class `show_paper_citations` and attribute `data` to display the citations of your paper. Set the data to the google scholar paper ID. For
-        ```html
-        <span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span>
-        ``` 
-        > Q: How to get the google scholar paper ID?   
-        > A: Enter your google scholar homepage and click the paper name. Then you can see the paper ID from `citation_for_view=XXXX`, where `XXXX` is the required paper ID.
-1. Your page will be published at `https://USERNAME.github.io`.
-
-## Debug Locally
-
-1. Clone your REPO to local using `git clone`.
-1. Install Jekyll building environment, including `Ruby`, `RubyGems`, `GCC` and `Make` following [the installation guide](https://jekyllrb.com/docs/installation/#requirements).
-1. Run `bash run_server.sh` to start Jekyll livereload server.
-1. Open http://127.0.0.1:4000 in your browser.
-1. If you change the source code of the website, the livereload server will automatically refresh.
-1. When you finish the modification of your homepage, `commit` your changings and `push` to your remote REPO using `git` command.
-
-# Acknowledges
-
-- AcadHomepage incorporates Font Awesome, which is distributed under the terms of the SIL OFL 1.1 and MIT License.
-- AcadHomepage is influenced by the github repo [mmistakes/minimal-mistakes](https://github.com/mmistakes/minimal-mistakes), which is distributed under the MIT License.
-- AcadHomepage is influenced by the github repo [academicpages/academicpages.github.io](https://github.com/academicpages/academicpages.github.io), which is distributed under the MIT License.
+1. 在 GitHub 新建名为 `<你的用户名>.github.io` 的公开仓库。
+2. 将本目录（`homepage/` 下的全部文件）推送到仓库的 `main` 分支根目录：
+   ```bash
+   cd homepage
+   git init
+   git add .
+   git commit -m "Initial academic homepage"
+   git branch -M main
+   git remote add origin https://github.com/<你的用户名>/<你的用户名>.github.io.git
+   git push -u origin main
+   ```
+3. 在仓库 **Settings → Pages** 中确认 Source 为 `Deploy from a branch`（`main` / `/ (root)`），等待约 1 分钟即可通过 `https://<你的用户名>.github.io/` 访问。
